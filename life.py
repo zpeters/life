@@ -4,11 +4,11 @@ import random
 import time
 import os
 
-LIVECHAR = '.'
-OLDLIVECHAR = '*'
+LIVECHAR = '-'
+OLDLIVECHAR = '='
 DEADCHAR = ' '
 LIFECHANCE = 28
-UPDATESPEED = 0.1
+UPDATESPEED = 0.06
 GRIDWIDTH = 5
 GRIDHEIGHT = 5
 
