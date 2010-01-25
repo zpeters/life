@@ -4,9 +4,10 @@ import random
 import time
 import os
 
-LIVECHAR = "o"
-DEADCHAR = " "
-LIFECHANCE = 10
+LIVECHAR = '.'
+OLDLIVECHAR = '*'
+DEADCHAR = ' '
+LIFECHANCE = 28
 UPDATESPEED = 0.1
 GRIDWIDTH = 5
 GRIDHEIGHT = 5
@@ -70,6 +71,8 @@ def printBoard(board):
         for cell in range(GRIDWIDTH):
             if board[row][cell] == 1:
                 sys.stdout.write(LIVECHAR)
+            elif board[row][cell] > 1:
+                sys.stdout.write(OLDLIVECHAR)
             else:
                 sys.stdout.write(DEADCHAR)
         sys.stdout.write("|\n")
@@ -87,19 +90,21 @@ def updateBoard(board):
         for col in range(GRIDWIDTH):
             state = board[row][col]
             newState = testLife(state, getNeighbors(board, row, col))
+            if state == 1 and newState == 1:
+                newState = 2
             rowArray.append(newState)
         newBoard.append(rowArray)
     return newBoard
 
 def testLife(state, neighborsValues):
     newState = 0
-    if state == 1 and neighborsValues < 2:
+    if (state == 1 or state == 2) and neighborsValues < 2:
         newState = 0
 
-    if state == 1 and neighborsValues > 3:
+    if (state == 1 or state == 2) and neighborsValues > 3:
         newState = 0
 
-    if (state == 1 and neighborsValues == 2) or (state == 1 and neighborsValues == 3):
+    if ((state == 1 or state ==2) and neighborsValues == 2) or ((state == 1 or state==2) and neighborsValues == 3):
         newState = 1
 
     if state == 0 and neighborsValues == 3:
@@ -154,11 +159,20 @@ def getNeighbors(board, row, col):
     neighbors = neighbor1 + neighbor2 + neighbor3 + neighbor4 + neighbor5 + neighbor6 + neighbor7 + neighbor8
     return int(neighbors)
 
+def boardAlive(board):
+    sum = 0
+    for line in board:
+        for item in line:
+            sum = sum + item
+    return sum
+            
 def main():
     board = initBoard()
     while 1:
         printBoard(board)
         board = updateBoard(board)
+        if not boardAlive(board):
+            board = initBoard()
         time.sleep(UPDATESPEED)
     
 if __name__ == "__main__":
