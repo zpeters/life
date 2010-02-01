@@ -4,8 +4,8 @@ import random
 import time
 import os
 
-LIVECHAR = '-'
-OLDLIVECHAR = '='
+LIVECHAR = 'o'
+OLDLIVECHAR = 'O'
 DEADCHAR = ' '
 LIFECHANCE = 28
 UPDATESPEED = 0.06
