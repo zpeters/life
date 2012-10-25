@@ -7,11 +7,12 @@ import os
 LIVECHAR = '-'
 OLDLIVECHAR = '='
 DEADCHAR = ' '
-LIFECHANCE = 28
-UPDATESPEED = 0.06
-GRIDWIDTH = 5
-GRIDHEIGHT = 5
-
+LIFECHANCE = random.randrange(10,100)
+UPDATESPEED = 0.08
+GRIDWIDTH = 40
+GRIDHEIGHT = 20
+RANDRANGE = random.randrange(1,1000)
+    
 def getTerminalSize():
     def ioctl_GWINSZ(fd):
         try:
@@ -40,6 +41,7 @@ def initBoard():
     # set dynamic grid size, if possible
     global GRIDWIDTH
     global GRIDHEIGHT
+    global RANDRANGE
 
     (width, height) = getTerminalSize()
 
@@ -50,7 +52,7 @@ def initBoard():
     for i in range(GRIDHEIGHT):
         row = []
         for j in range(GRIDWIDTH):
-            lifeSpark = random.randrange(1,100)
+            lifeSpark = random.randrange(1,RANDRANGE)
             if lifeSpark < LIFECHANCE:
                 state = 1
             else:
